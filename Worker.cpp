@@ -1,16 +1,16 @@
 #include "Worker.hpp"
 
-Worker::Worker(std::string name_, std::string surname_, int PESEL_, char sex_, std::string address_, int payment_) :
-    Person(name_, surname_, PESEL_, sex_, address_),
-    payment(payment_)
+Worker::Worker(std::string name, std::string surname, int PESEL, char sex, std::string address, int payment) :
+    Person(name, surname, PESEL, sex, address),
+    payment_(payment)
 {}
 
 int Worker::getPayment() const
 {
-    return payment;
+    return payment_;
 }
     
-void Worker::setPayment(int payment_) 
+void Worker::setPayment(int payment) 
 {
 }
 

@@ -4,10 +4,10 @@
 
 class Worker : public Person
 {
-    int payment;
+    int payment_;
 public:
-    Worker(std::string name_, std::string surname_, int PESEL_, char sex_, std::string address_, int payment_);
+    Worker(std::string name, std::string surname, int PESEL, char sex, std::string address, int payment);
     int getPayment() const override;
-    void setPayment(int payment_) override;
+    void setPayment(int payment) override;
     ~Worker();
 };

@@ -3,11 +3,11 @@
 
 class Student : public Person
 {
-    int index;
+    int index_;
 public:
-    Student(std::string name_, std::string surname_, int PESEL_, char sex, std::string address, int index_);
+    Student(std::string name, std::string surname, int PESEL, char sex, std::string address, int index);
     int getIndex() const override;
     int getPayment() const override;
-    void setPayment(int payment_) override;
+    void setPayment(int payment) override;
     ~Student();
 };

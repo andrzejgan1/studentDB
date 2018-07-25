@@ -1,44 +1,44 @@
 #include "Person.hpp"
 
-Person::Person(std::string name_, std::string surname_, int PESEL_, char sex_, std::string address_) :
-    name(name_),
-    surname(surname_),
-    PESEL(PESEL_),
-    sex(sex_),
-    address(address_)
+Person::Person(std::string name, std::string surname, int PESEL, char sex, std::string address) :
+    name_(name),
+    surname_(surname),
+    PESEL_(PESEL),
+    sex_(sex),
+    address_(address)
 {}
 
 std::string Person::getSurname() const
 {
-    return surname;
+    return surname_;
 }
 
 std::string Person::getName() const
 {
-    return name;
+    return name_;
 }
 
 int Person::getPESEL() const
 {
-    return PESEL;
+    return PESEL_;
 }
 
-void Person::setAddress(std::string address_)
+void Person::setAddress(std::string address)
 {
 }
     
-bool Person::checkPESEL(int PESEL_) 
+bool Person::checkPESEL(int PESEL) 
 {
 }
 
 std::string Person::getAddress() const
 {
-    return address;
+    return address_;
 }
 
 char Person::getSex() const
 {
-    return sex;
+    return sex_;
 }
 
 int Person::getIndex() const

@@ -3,9 +3,9 @@
 #include <iostream>
 #include <iomanip>
 
-void Database::addPerson(Person* person_)
+void Database::addPerson(Person* person)
 {
-    persons.push_back(person_);
+    persons_.push_back(person);
 }
 
 void Database::sortByPayment()
@@ -20,36 +20,36 @@ void Database::sortBySurname()
 {
 }
 
-void Database::removePersonWithPESEL(int PESEL_)
+void Database::removePersonWithPESEL(int PESEL)
 {
 }
 
-Person* Database::findPersonWithPESEL(int PESEL_)
+Person* Database::findPersonWithPESEL(int PESEL)
 {
-    auto iter = std::find_if(begin(persons), end(persons),
-                    [PESEL_](const auto & person){
-                    return person->getPESEL() == PESEL_;
+    auto iter = std::find_if(begin(persons_), end(persons_),
+                    [PESEL](const auto & person_){
+                    return person_->getPESEL() == PESEL;
                 });
     return *iter;
 }
 
-Person* Database::findPersonWithSurname(std::string surname_)
+Person* Database::findPersonWithSurname(std::string surname)
 {
-    auto iter = std::find_if(begin(persons), end(persons),
-                    [surname_](const auto & person){
-                    return person->getSurname() == surname_;
+    auto iter = std::find_if(begin(persons_), end(persons_),
+                    [surname](const auto & person_){
+                    return person_->getSurname() == surname;
                 });
     return *iter;
 }
     
-void Database::changeAddressPaymentPersonWithPESEL(int PESEL_, std::string address_, int payment_)
+void Database::changeAddressPaymentPersonWithPESEL(int PESEL, std::string address, int payment)
 {
 }
     
 void Database::showDB()
 {
     system("clear");
-    if (persons.empty())
+    if (persons_.empty())
     {
         std::cout << "Database is empty!" << std::endl;
         return;
@@ -65,7 +65,7 @@ void Database::showDB()
     std::cout.fill('=');
     std::cout << std::setw(150) << "=" << std::endl;
     std::cout.fill(' ');
-    for ( auto it : persons )
+    for ( auto it : persons_ )
     {
     std::cout << std::left << std::setw(20)
               << (it)->getPESEL() << std::setw(20)
