@@ -1,4 +1,5 @@
 #include "Database.hpp"
+#include <algorithm>
 
 void Database::addPerson(Person* person_)
 {
@@ -23,10 +24,20 @@ void Database::removePersonWithPESEL(int PESEL_)
 
 Person* Database::findPersonWithPESEL(int PESEL_)
 {
+    auto iter = std::find_if(begin(persons), end(persons), 
+                    [PESEL_](const auto & person){
+                    return person->getPESEL() == PESEL_;
+                });
+    return *iter;
 }
 
 Person* Database::findPersonWithSurname(std::string surname_)
 {
+    auto iter = std::find_if(begin(persons), end(persons), 
+                    [surname_](const auto & person){
+                    return person->getSurname() == surname_;
+                });
+    return *iter;
 }
     
 void Database::changeAddressPaymentPersonWithPESEL(int PESEL_, std::string address_, int payment_)

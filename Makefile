@@ -1,6 +1,6 @@
 CXX = clang++
 STD = -std=c++14
-CXXFLAGS = -Wall -Wpedantic -Wextra -Wc++11-extensions
+CXXFLAGS = #-Wall -Wpedantic -Wextra -Wc++11-extensions
 SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:.cpp=.o)
 TARGET = db.out
