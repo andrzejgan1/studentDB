@@ -12,6 +12,7 @@ int Student::getIndex() const
 
 int Student::getPayment() const 
 {
+    return 0;
 }
     
 void Student::setPayment(int payment_) 

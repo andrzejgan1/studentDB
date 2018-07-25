@@ -31,4 +31,18 @@ bool Person::checkPESEL(int PESEL_)
 {
 }
 
+std::string Person::getAddress() const
+{
+    return address;
+}
+
+char Person::getSex() const
+{
+    return sex;
+}
+
+int Person::getIndex() const
+{
+    return 0;
+}
 Person::~Person() {}

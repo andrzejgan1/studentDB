@@ -18,5 +18,8 @@ public:
     void setAddress(std::string address_);
     virtual void setPayment(int payment_) = 0;
     bool checkPESEL(int PESEL_);
+    std::string getAddress() const;
+    char getSex() const;
+    virtual int getIndex() const;
     virtual ~Person();
 };
