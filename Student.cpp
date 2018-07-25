@@ -7,6 +7,7 @@ Student::Student(std::string name_, std::string surname_, int PESEL_, char sex_,
 
 int Student::getIndex() const
 {
+    return index;
 }
 
 int Student::getPayment() const 
