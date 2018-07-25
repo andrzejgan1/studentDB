@@ -7,6 +7,7 @@ Worker::Worker(std::string name_, std::string surname_, int PESEL_, char sex_, s
 
 int Worker::getPayment() const
 {
+    return payment;
 }
     
 void Worker::setPayment(int payment_) 
