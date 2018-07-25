@@ -2,7 +2,7 @@
 
 void Database::addPerson(Person* person_)
 {
-    persons.pushback(person_);
+    persons.push_back(person_);
 }
 
 void Database::sortByPayment()

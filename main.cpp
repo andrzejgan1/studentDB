@@ -9,6 +9,5 @@ int main()
     Worker w1("Bogdan", "Cichy", 55555, 'M', "Dlugopolska 54, 55-557 Wroclaw", 6000);
     db.addPerson(&s1); 
     db.addPerson(&w1); 
-// komentarz testowy
     return 0;
 }
