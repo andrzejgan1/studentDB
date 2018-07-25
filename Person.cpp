@@ -10,14 +10,17 @@ Person::Person(std::string name_, std::string surname_, int PESEL_, char sex_, s
 
 std::string Person::getSurname() const
 {
+    return surname;
 }
 
 std::string Person::getName() const
 {
+    return name;
 }
 
 int Person::getPESEL() const
 {
+    return PESEL;
 }
 
 void Person::setAddress(std::string address_)
