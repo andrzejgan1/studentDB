@@ -12,6 +12,8 @@ int Worker::getPayment() const
     
 void Worker::setPayment(int payment) 
 {
+    if ( payment >= 0 )
+    payment_ = payment;
 }
 
 Worker::~Worker() {}
