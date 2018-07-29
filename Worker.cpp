@@ -1,6 +1,6 @@
 #include "Worker.hpp"
 
-Worker::Worker(std::string name, std::string surname, int PESEL, char sex, std::string address, int payment) :
+Worker::Worker(const std::string & name, const std::string & surname, const std::string & PESEL, char sex, const std::string & address, int payment) :
     Person(name, surname, PESEL, sex, address),
     payment_(payment)
 {}

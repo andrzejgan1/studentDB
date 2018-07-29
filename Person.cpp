@@ -1,6 +1,6 @@
 #include "Person.hpp"
 
-Person::Person(std::string name, std::string surname, int PESEL, char sex, std::string address) :
+Person::Person(const std::string & name, const std::string & surname, const std::string & PESEL, char sex, const std::string & address) :
     name_(name),
     surname_(surname),
     PESEL_(PESEL),
@@ -18,17 +18,19 @@ std::string Person::getName() const
     return name_;
 }
 
-int Person::getPESEL() const
+std::string Person::getPESEL() const
 {
     return PESEL_;
 }
 
-void Person::setAddress(std::string address)
+void Person::setAddress(const std::string & address)
 {
 }
     
-bool Person::checkPESEL(int PESEL) 
+bool Person::checkPESEL(const std::string & PESEL) 
 {
+    //needs implementation
+    return 1;
 }
 
 std::string Person::getAddress() const

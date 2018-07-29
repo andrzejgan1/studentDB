@@ -6,18 +6,18 @@ class Person
 {
     std::string name_;
     std::string surname_;
-    int PESEL_;
+    std::string PESEL_;
     char sex_;
     std::string address_;
 public:
-    Person(std::string name, std::string surname, int PESEL, char sex, std::string address);
+    Person(const std::string & name, const std::string & surname, const std::string & PESEL, char sex, const std::string & address);
     virtual int getPayment() const = 0;
     std::string getName() const;
-    int getPESEL() const;
+    std::string getPESEL() const;
     std::string getSurname() const;
-    void setAddress(std::string address);
+    void setAddress(const std::string & address);
     virtual void setPayment(int payment) = 0;
-    bool checkPESEL(int PESEL);
+    bool checkPESEL(const std::string & PESEL);
     std::string getAddress() const;
     char getSex() const;
     virtual int getIndex() const;
