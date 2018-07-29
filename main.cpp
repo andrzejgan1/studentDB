@@ -42,5 +42,18 @@ std::cout << "I'm tring find person with PESEL: 12345678901 - which is in databa
     std::cin.get();
 std::cout << "I'm showing the database" << std::endl;
     db.showDB();
+    std::cin.get();
+std::cout << "I'm sorting database by PESEL" << std::endl;
+    db.sortByPESEL();
+    db.showDB();
+    std::cin.get();
+std::cout << "I'm sorting database by surname" << std::endl;
+    db.sortBySurname();
+    db.showDB();
+    std::cin.get();
+std::cout << "I'm sorting database by payment" << std::endl;
+    db.sortByPayment();
+    db.showDB();
+    std::cin.get();
     return 0;
 }
