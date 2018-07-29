@@ -13,14 +13,26 @@ void Database::addPerson(Person* person)
 
 void Database::sortByPayment()
 {
+    std::sort(persons_.begin(), persons_.end(),
+                    [](const Person *person1_, const Person *person2_){
+                    return person1_->getPayment() < person2_->getPayment();
+                });
 }
 
 void Database::sortByPESEL()
 {
+    std::sort(persons_.begin(), persons_.end(),
+                    [](const Person *person1_, const Person *person2_){
+                    return person1_->getPESEL() < person2_->getPESEL();
+                });
 } 
 
 void Database::sortBySurname()
 {
+    std::sort(persons_.begin(), persons_.end(),
+                    [](const Person *person1_, const Person *person2_){
+                    return person1_->getSurname() < person2_->getSurname();
+                });
 }
 
 void Database::removePersonWithPESEL(const std::string & PESEL)
