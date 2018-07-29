@@ -20,5 +20,7 @@ public:
     void saveToFile();
     void readFromFile();
     void fillDB(int numberOfStudnets, int numberOfWorkers);
+    void printNamesTable() const;
+    void printDataPerson(Person * it) const;
     ~Database();
 };

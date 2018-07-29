@@ -41,10 +41,12 @@ void Database::removePersonWithPESEL(const std::string & PESEL)
 
 Person* Database::findPersonWithPESEL(const std::string & PESEL)
 {
+    if (persons_.empty()) throw std::invalid_argument("Database is empty!");
     auto iter = std::find_if(begin(persons_), end(persons_),
                     [PESEL](const auto & person_){
                     return person_->getPESEL() == PESEL;
                 });
+    if (iter == end(persons_)) throw std::invalid_argument("There is no person with PESEL in the database");
     return *iter;
 }
 
@@ -63,33 +65,11 @@ void Database::changeAddressPaymentPersonWithPESEL(const std::string & PESEL, co
     
 void Database::showDB()
 {
-    system("clear");
-    if (persons_.empty())
-    {
-        std::cout << "Database is empty!" << std::endl;
-        return;
-    }
-    std::cout << std::left << std::setw(20)
-              << "PESEL" << std::setw(20)
-              << "Name" << std::setw(20)
-              << "Surname" << std::setw(20)
-              << "Sex" << std::setw(40)
-              << "Address" << std::setw(20)
-              << "Index number" << std::setw(20)
-              << "Payment" << std::endl;
-    std::cout.fill('=');
-    std::cout << std::setw(150) << "=" << std::endl;
-    std::cout.fill(' ');
+    if (persons_.empty()) throw std::invalid_argument("Database is empty");
+    printNamesTable();
     for ( auto it : persons_ )
     {
-    std::cout << std::left << std::setw(20)
-              << (it)->getPESEL() << std::setw(20)
-              << (it)->getName() << std::setw(20)
-              << (it)->getSurname() << std::setw(20)
-              << (it)->getSex() << std::setw(40)
-              << (it)->getAddress() << std::setw(20)
-              << (it)->getIndex() << std::setw(20)
-              << (it)->getPayment() << std::endl;
+        printDataPerson(it);
     }
 }
 
@@ -160,6 +140,33 @@ void Database::getData(std::string & name,
             + streets[getRandom(0, streets.size() - 1)] + " " 
             + std::to_string(getRandom(1,100));
     sex = name.back() == 'a'? 'W' : 'M';
+}
+
+void Database::printNamesTable() const
+{
+    std::cout << std::left << std::setw(20)
+              << "PESEL" << std::setw(20)
+              << "Name" << std::setw(20)
+              << "Surname" << std::setw(20)
+              << "Sex" << std::setw(40)
+              << "Address" << std::setw(20)
+              << "Index number" << std::setw(20)
+              << "Payment" << std::endl;
+    std::cout.fill('=');
+    std::cout << std::setw(150) << "=" << std::endl;
+    std::cout.fill(' ');
+}
+
+void Database::printDataPerson(Person * it) const
+{
+     std::cout << std::left << std::setw(20)
+               << (it)->getPESEL() << std::setw(20)
+               << (it)->getName() << std::setw(20)
+               << (it)->getSurname() << std::setw(20)
+               << (it)->getSex() << std::setw(40)
+               << (it)->getAddress() << std::setw(20)
+               << (it)->getIndex() << std::setw(20)
+               << (it)->getPayment() << std::endl;
 }
 
 Database::~Database()
