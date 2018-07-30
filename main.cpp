@@ -27,11 +27,11 @@ std::cout << "I'm tring find PESEL - 123 -  no exists in database" << std::endl;
     }
     std::cin.get();
 std::cout << "I'm tring find person with PESEL: 12345678901 - which is in database" << std::endl;
-    Person *student = new Student("Katarzyna", "Nowak", "12345678901", 'W', "Wroclw, Staszica 12", 99789);
+std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclw, Staszica 12", 99789);
         db.addPerson(student);
     try
     {
-        Person *person = db.findPersonWithPESEL("12345678901");
+        std::shared_ptr<Person> person = db.findPersonWithPESEL("12345678901");
         db.printNamesTable();
         db.printDataPerson(person);
     }
@@ -43,7 +43,7 @@ std::cout << "I'm tring find person with PESEL: 12345678901 - which is in databa
 std::cout << "I'm tring find persons with surname: Kot - no in the database" << std::endl;
     try
     {
-        std::vector<Person *> persons = db.findPersonWithSurname("Kot");
+        std::vector<std::shared_ptr<Person>> persons = db.findPersonWithSurname("Kot");
         db.printNamesTable();
         for (auto iter : persons)
         {
@@ -57,8 +57,7 @@ std::cout << "I'm tring find persons with surname: Kot - no in the database" << 
     std::cin.get();
 std::cout << "I'm tring find persons with surname: Lis" << std::endl;
     try
-    {
-        std::vector<Person *> persons = db.findPersonWithSurname("Lis");
+    {        std::vector<std::shared_ptr<Person>> persons = db.findPersonWithSurname("Lis");
         db.printNamesTable();
         for (auto iter : persons)
         {
@@ -86,4 +85,4 @@ std::cout << "I'm sorting database by payment" << std::endl;
     db.showDB();
     std::cin.get();
     return 0;
-
+}
