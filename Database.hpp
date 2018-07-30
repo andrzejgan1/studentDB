@@ -14,7 +14,7 @@ public:
     void sortByPayment();
     void removePersonWithPESEL(const std::string & PESEL);
     Person* findPersonWithPESEL(const std::string & PESEL);
-    Person* findPersonWithSurname(const std::string & surname);
+    std::vector<Person *> findPersonWithSurname(const std::string & surname);
     void changeAddressPaymentPersonWithPESEL(const std::string & PESEL, const std::string & address, int payment);
     void showDB();
     void saveToFile();

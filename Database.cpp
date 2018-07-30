@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <random> 
+#include <stdexcept> 
 #include "Student.hpp"
 #include "Worker.hpp"
 
@@ -46,17 +47,31 @@ Person* Database::findPersonWithPESEL(const std::string & PESEL)
                     [PESEL](const auto & person_){
                     return person_->getPESEL() == PESEL;
                 });
-    if (iter == end(persons_)) throw std::invalid_argument("There is no person with PESEL in the database");
+    std::string message = "There is no person with PESEL - " + PESEL + " in the database";
+    if (iter == end(persons_)) throw std::invalid_argument(message);
     return *iter;
 }
 
-Person* Database::findPersonWithSurname(const std::string & surname)
+std::vector<Person *> Database::findPersonWithSurname(const std::string & surname)
 {
-    auto iter = std::find_if(begin(persons_), end(persons_),
-                    [surname](const auto & person_){
-                    return person_->getSurname() == surname;
-                });
-    return *iter;
+    if (persons_.empty()) throw std::invalid_argument("Database is empty!");
+    std::vector<Person *> personsWithSurname;
+    auto iter = begin(persons_);
+    while (iter != end(persons_))
+    {
+        iter = std::find_if(iter, end(persons_),
+                  [surname](const auto & person_){
+                      return person_->getSurname() == surname;
+                  });
+        if (iter != end(persons_))
+        {
+            personsWithSurname.push_back(*iter);
+            iter++;
+        }
+    }
+    std::string message = "There isn't person with surname " + surname;
+    if (personsWithSurname.empty()) throw std::invalid_argument(message);
+    return personsWithSurname;
 }
     
 void Database::changeAddressPaymentPersonWithPESEL(const std::string & PESEL, const std::string & address, int payment)

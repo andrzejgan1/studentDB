@@ -5,7 +5,7 @@
 int main()
 {
     Database db;
-std::cout << "I'm tring find PESEL in empty database" << std::endl;
+std::cout << "I'm tring find PESEL - 123 - in empty database" << std::endl;
     try
     {
         db.findPersonWithPESEL("123");
@@ -15,7 +15,7 @@ std::cout << "I'm tring find PESEL in empty database" << std::endl;
         std::cout << exc.what() << std::endl;
     }
     std::cin.get();
-std::cout << "I'm tring find PESEL no exists in database" << std::endl;
+std::cout << "I'm tring find PESEL - 123 -  no exists in database" << std::endl;
     db.fillDB(15, 18);
     try
     {
@@ -40,6 +40,36 @@ std::cout << "I'm tring find person with PESEL: 12345678901 - which is in databa
         std::cout << exc.what() << std::endl;
     }
     std::cin.get();
+std::cout << "I'm tring find persons with surname: Kot - no in the database" << std::endl;
+    try
+    {
+        std::vector<Person *> persons = db.findPersonWithSurname("Kot");
+        db.printNamesTable();
+        for (auto iter : persons)
+        {
+            db.printDataPerson(iter);
+        }
+    }
+    catch(const std::exception & exc)
+    {
+        std::cout << exc.what() << std::endl;
+    }
+    std::cin.get();
+std::cout << "I'm tring find persons with surname: Lis" << std::endl;
+    try
+    {
+        std::vector<Person *> persons = db.findPersonWithSurname("Lis");
+        db.printNamesTable();
+        for (auto iter : persons)
+        {
+            db.printDataPerson(iter);
+        }
+    }
+    catch(const std::exception & exc)
+    {
+        std::cout << exc.what() << std::endl;
+    }
+    std::cin.get();
 std::cout << "I'm showing the database" << std::endl;
     db.showDB();
     std::cin.get();
@@ -56,4 +86,4 @@ std::cout << "I'm sorting database by payment" << std::endl;
     db.showDB();
     std::cin.get();
     return 0;
-}
+
