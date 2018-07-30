@@ -5,7 +5,7 @@
 int main()
 {
     Database db;
-std::cout << "I'm tring find PESEL - 123 - in empty database" << std::endl;
+std::cout << "I'm trying find PESEL - 123 - in empty database" << std::endl;
     try
     {
         db.findPersonWithPESEL("123");
@@ -15,7 +15,7 @@ std::cout << "I'm tring find PESEL - 123 - in empty database" << std::endl;
         std::cout << exc.what() << std::endl;
     }
     std::cin.get();
-std::cout << "I'm tring find PESEL - 123 -  no exists in database" << std::endl;
+std::cout << "I'm trying find PESEL - 123 -  no exists in database" << std::endl;
     db.fillDB(15, 18);
     try
     {
@@ -26,8 +26,8 @@ std::cout << "I'm tring find PESEL - 123 -  no exists in database" << std::endl;
         std::cout << exc.what() << std::endl;
     }
     std::cin.get();
-std::cout << "I'm tring find person with PESEL: 12345678901 - which is in database" << std::endl;
-std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclw, Staszica 12", 99789);
+std::cout << "I'm trying find person with PESEL: 12345678901 - which is in database" << std::endl;
+std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclaw, Staszica 12", 99789);
         db.addPerson(student);
     try
     {
@@ -40,7 +40,7 @@ std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak"
         std::cout << exc.what() << std::endl;
     }
     std::cin.get();
-std::cout << "I'm tring find persons with surname: Kot - no in the database" << std::endl;
+std::cout << "I'm trying find persons with surname: Kot - no in the database" << std::endl;
     try
     {
         std::vector<std::shared_ptr<Person>> persons = db.findPersonWithSurname("Kot");
@@ -55,7 +55,7 @@ std::cout << "I'm tring find persons with surname: Kot - no in the database" << 
         std::cout << exc.what() << std::endl;
     }
     std::cin.get();
-std::cout << "I'm tring find persons with surname: Lis" << std::endl;
+std::cout << "I'm trying find persons with surname: Lis" << std::endl;
     try
     {        std::vector<std::shared_ptr<Person>> persons = db.findPersonWithSurname("Lis");
         db.printNamesTable();
