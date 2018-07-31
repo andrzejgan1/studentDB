@@ -82,9 +82,9 @@ void Database::showDB()
 {
     if (persons_.empty()) throw std::invalid_argument("Database is empty");
     printNamesTable();
-    for ( auto it : persons_ )
+    for ( auto singlePerson : persons_ )
     {
-        printDataPerson(it);
+        printDataPerson(singlePerson);
     }
 }
 
@@ -172,14 +172,14 @@ void Database::printNamesTable() const
     std::cout.fill(' ');
 }
 
-void Database::printDataPerson(std::shared_ptr<Person> it) const
+void Database::printDataPerson(std::shared_ptr<Person> person) const
 {
      std::cout << std::left << std::setw(20)
-               << (it)->getPESEL() << std::setw(20)
-               << (it)->getName() << std::setw(20)
-               << (it)->getSurname() << std::setw(20)
-               << (it)->getSex() << std::setw(40)
-               << (it)->getAddress() << std::setw(20)
-               << (it)->getIndex() << std::setw(20)
-               << (it)->getPayment() << std::endl;
+               << person->getPESEL() << std::setw(20)
+               << person->getName() << std::setw(20)
+               << person->getSurname() << std::setw(20)
+               << person->getSex() << std::setw(40)
+               << person->getAddress() << std::setw(20)
+               << person->getIndex() << std::setw(20)
+               << person->getPayment() << std::endl;
 }
