@@ -25,17 +25,18 @@ std::string Person::getPESEL() const
 
 void Person::setAddress(const std::string & address)
 {
+    address_ = address;
+}
+
+std::string Person::getAddress() const
+{
+    return address_;
 }
     
 bool Person::checkPESEL(const std::string & PESEL) 
 {
     //needs implementation
     return 1;
-}
-
-std::string Person::getAddress() const
-{
-    return address_;
 }
 
 char Person::getSex() const
