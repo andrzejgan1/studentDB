@@ -25,6 +25,7 @@ std::string Person::getPESEL() const
 
 void Person::setAddress(const std::string & address)
 {
+    address_ = address;
 }
     
 bool Person::checkPESEL(const std::string & PESEL) 
