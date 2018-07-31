@@ -1,75 +1,70 @@
+#define CATCH_CONFIG_MAIN 
 #include "Database.hpp"
 #include "Student.hpp"
 #include <iostream>
+#include "catch.hpp"
 
-int main()
+
+TEST_CASE("Testing find person")
 {
-    Database db;
-std::cout << "I'm trying find PESEL - 123 - in empty database" << std::endl;
-    try
+    SECTION("Finding person by PESEL")
     {
-        db.findPersonWithPESEL("123");
-    }
-    catch(const std::exception & exc)
-    {
-        std::cout << exc.what() << std::endl;
-    }
-    std::cin.get();
-std::cout << "I'm trying find PESEL - 123 -  no exists in database" << std::endl;
-    db.fillDB(15, 18);
-    try
-    {
-        db.findPersonWithPESEL("123");
-    }
-    catch(const std::exception & exc)
-    {
-        std::cout << exc.what() << std::endl;
-    }
-    std::cin.get();
-std::cout << "I'm trying find person with PESEL: 12345678901 - which is in database" << std::endl;
-std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclaw, Staszica 12", 99789);
-        db.addPerson(student);
-    try
-    {
-        std::shared_ptr<Person> person = db.findPersonWithPESEL("12345678901");
-        db.printNamesTable();
-        db.printDataPerson(person);
-    }
-    catch(const std::exception & exc)
-    {
-        std::cout << exc.what() << std::endl;
-    }
-    std::cin.get();
-std::cout << "I'm trying find persons with surname: Kot - no in the database" << std::endl;
-    try
-    {
-        std::vector<std::shared_ptr<Person>> persons = db.findPersonWithSurname("Kot");
-        db.printNamesTable();
-        for (auto iter : persons)
+        GIVEN("A empty database")
         {
-            db.printDataPerson(iter);
+            Database db;
+            WHEN("Finding person with PESEL - 123 - in empty database")
+            {
+                REQUIRE_THROWS_WITH(db.findPersonWithPESEL("123"),"Database is empty!");
+            }
+            GIVEN("Fill the database random data 15 students and 18 workers")
+            {
+                db.fillDB(15, 18);
+                THEN("Finding person with PESEL - 123 - no in the database")
+                {
+                    REQUIRE_THROWS_WITH(db.findPersonWithPESEL("123"),"There is no person with PESEL - 123 in the database");
+                }
+                WHEN("Added person to database")
+                {
+                    std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclaw, Staszica 12", 99789);
+                    db.addPerson(student);
+                    THEN("Finding person with PESEL - 12345678901 - existe in the database")
+                    {
+                        REQUIRE(db.findPersonWithPESEL("12345678901") == student);
+                    }
+                }
+            }
         }
     }
-    catch(const std::exception & exc)
+    SECTION("Finding person by surname")
     {
-        std::cout << exc.what() << std::endl;
-    }
-    std::cin.get();
-std::cout << "I'm trying find persons with surname: Lis" << std::endl;
-    try
-    {        std::vector<std::shared_ptr<Person>> persons = db.findPersonWithSurname("Lis");
-        db.printNamesTable();
-        for (auto iter : persons)
+        GIVEN("A empty database")
         {
-            db.printDataPerson(iter);
+            Database db;
+            WHEN("Finding person with surname - Kot - in empty database")
+            {
+                REQUIRE_THROWS_WITH(db.findPersonWithSurname("Kot"),"Database is empty!");
+            }
+            GIVEN("Fill the database random data 15 students and 18 workers")
+            {
+                db.fillDB(15, 18);
+                THEN("Finding person with surname - Kot - no in the database")
+                {
+                    REQUIRE_THROWS_WITH(db.findPersonWithSurname("Kot"),"There isn't person with surname Kot");
+                }
+                THEN("Finding persons with surname - Lis  - existe in the database")
+                {
+                    std::vector<std::shared_ptr<Person>> personsWithSurnames = db.findPersonWithSurname("Lis");
+                    for (auto person : personsWithSurnames)
+                    {
+                        REQUIRE(person->getSurname() == "Lis");
+                    }
+                }
+            }
         }
     }
-    catch(const std::exception & exc)
-    {
-        std::cout << exc.what() << std::endl;
-    }
-    std::cin.get();
-std::cout << "I'm showing the database" << std::endl;
+}
+/*
+   std::cout << "I'm showing the database" << std::endl;
     db.showDB();
     std::cin.get();
 std::cout << "I'm sorting database by PESEL" << std::endl;
@@ -85,4 +80,4 @@ std::cout << "I'm sorting database by payment" << std::endl;
     db.showDB();
     std::cin.get();
     return 0;
-}
+}*/
