@@ -14,6 +14,7 @@ void Database::addPerson(std::shared_ptr<Person> person)
 
 void Database::sortByPayment()
 {
+    if (persons_.empty()) throw std::invalid_argument("Database is empty!");
     std::sort(persons_.begin(), persons_.end(),
                     [](const auto & person1, const auto & person2){
                     return person1->getPayment() < person2->getPayment();
@@ -22,6 +23,7 @@ void Database::sortByPayment()
 
 void Database::sortByPESEL()
 {
+    if (persons_.empty()) throw std::invalid_argument("Database is empty!");
     std::sort(persons_.begin(), persons_.end(),
                     [](const auto & person1, const auto & person2){
                     return person1->getPESEL() < person2->getPESEL();
@@ -30,6 +32,7 @@ void Database::sortByPESEL()
 
 void Database::sortBySurname()
 {
+    if (persons_.empty()) throw std::invalid_argument("Database is empty!");
     std::sort(persons_.begin(), persons_.end(),
                     [](const auto & person1, const auto & person2){
                     return person1->getSurname() < person2->getSurname();
@@ -182,4 +185,14 @@ void Database::printDataPerson(std::shared_ptr<Person> person) const
                << person->getAddress() << std::setw(20)
                << person->getIndex() << std::setw(20)
                << person->getPayment() << std::endl;
+}
+
+int Database::getNumberOfPersons() const
+{
+    return persons_.size();
+}
+
+std::vector<std::shared_ptr<Person>>::iterator Database::getFirstIterOfPerson()
+{
+    return begin(persons_);
 }

@@ -23,4 +23,6 @@ public:
     void fillDB(int numberOfStudnets, int numberOfWorkers);
     void printNamesTable() const;
     void printDataPerson(std::shared_ptr<Person> it) const;
+    int getNumberOfPersons() const;
+    std::vector<std::shared_ptr<Person>>::iterator getFirstIterOfPerson();
 };

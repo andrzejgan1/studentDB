@@ -63,21 +63,82 @@ TEST_CASE("Testing find person")
         }
     }
 }
-/*
-   std::cout << "I'm showing the database" << std::endl;
-    db.showDB();
-    std::cin.get();
-std::cout << "I'm sorting database by PESEL" << std::endl;
-    db.sortByPESEL();
-    db.showDB();
-    std::cin.get();
-std::cout << "I'm sorting database by surname" << std::endl;
-    db.sortBySurname();
-    db.showDB();
-    std::cin.get();
-std::cout << "I'm sorting database by payment" << std::endl;
-    db.sortByPayment();
-    db.showDB();
-    std::cin.get();
-    return 0;
-}*/
+
+TEST_CASE("Testing sort")
+{
+    SECTION("Sorting persons by PESEL")
+    {
+        GIVEN("A empty database")
+        {
+            Database db;
+            WHEN("Sorting persons by PESEL in empty database")
+            {
+                REQUIRE_THROWS_WITH(db.sortByPESEL(), "Database is empty!");
+            }
+            GIVEN("Fill the database random data 15 students and 18 workers")
+            {
+                db.fillDB(15, 18);
+                THEN("Sort person by PESEL in database")
+                {
+                    db.sortByPESEL();
+                    std::vector<std::shared_ptr<Person>>::iterator iter = db.getFirstIterOfPerson();
+                    for (int i = 0; i < db.getNumberOfPersons()-1; i++)
+                    {
+                        REQUIRE((*iter)->getPESEL() < (*(iter+1))->getPESEL());
+                        iter++;
+                    }
+                }
+            }
+        }
+    }
+    SECTION("Sorting persons by surname")
+    {
+        GIVEN("A empty database")
+        {
+            Database db;
+            WHEN("Sorting persons by surname in empty database")
+            {
+                REQUIRE_THROWS_WITH(db.sortBySurname(), "Database is empty!");
+            }
+            GIVEN("Fill the database random data 15 students and 18 workers")
+            {
+                db.fillDB(15, 18);
+                THEN("Sort person by surname in database")
+                {
+                    db.sortBySurname();
+                    std::vector<std::shared_ptr<Person>>::iterator iter = db.getFirstIterOfPerson();
+                    for (int i = 0; i < db.getNumberOfPersons()-1; i++)
+                    {
+                        REQUIRE((*iter)->getSurname() <= (*(iter+1))->getSurname());
+                        iter++;
+                    }
+                }
+            }
+        }
+    }
+    SECTION("Sorting persons by payment")
+    {
+        GIVEN("A empty database")
+        {
+            Database db;
+            WHEN("Sorting persons by payment in empty database")
+            {
+                REQUIRE_THROWS_WITH(db.sortByPayment(), "Database is empty!");
+            }
+            GIVEN("Fill the database random data 15 students and 18 workers")
+            {
+                db.fillDB(15, 18);
+                THEN("Sort person by payment in database")
+                {
+                    db.sortByPayment();
+                    std::vector<std::shared_ptr<Person>>::iterator iter = db.getFirstIterOfPerson();
+                    for (int i = 0; i < db.getNumberOfPersons()-1; i++)
+                    {
+                        REQUIRE((*iter)->getPayment() <= (*(iter+1))->getPayment());
+                        iter++;
+                    }
+                }
+            }
+        }
+    }
+}
