@@ -14,14 +14,14 @@ TEST_CASE("Testing find person")
             Database db;
             WHEN("Finding person with PESEL - 123 - in empty database")
             {
-                REQUIRE_THROWS_WITH(db.findPersonWithPESEL("123"),"Database is empty!");
+                REQUIRE_THROWS_WITH(*(db.findPersonWithPESEL("123")),"Database is empty!");
             }
             GIVEN("Fill the database random data 15 students and 18 workers")
             {
                 db.fillDB(15, 18);
                 THEN("Finding person with PESEL - 123 - no in the database")
                 {
-                    REQUIRE_THROWS_WITH(db.findPersonWithPESEL("123"),"There is no person with PESEL - 123 in the database");
+                    REQUIRE_THROWS_WITH(*(db.findPersonWithPESEL("123")),"There is no person with PESEL - 123 in the database");
                 }
                 WHEN("Added person to database")
                 {
@@ -29,7 +29,7 @@ TEST_CASE("Testing find person")
                     db.addPerson(student);
                     THEN("Finding person with PESEL - 12345678901 - existe in the database")
                     {
-                        REQUIRE(db.findPersonWithPESEL("12345678901") == student);
+                        REQUIRE(*(db.findPersonWithPESEL("12345678901")) == student);
                     }
                 }
             }

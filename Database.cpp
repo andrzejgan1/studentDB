@@ -43,7 +43,7 @@ void Database::removePersonWithPESEL(const std::string & PESEL)
 {
 }
 
-std::shared_ptr<Person> Database::findPersonWithPESEL(const std::string & PESEL)
+std::vector<std::shared_ptr<Person>>::iterator Database::findPersonWithPESEL(const std::string & PESEL)
 {
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
     auto iter = std::find_if(begin(persons_), end(persons_),
@@ -52,7 +52,7 @@ std::shared_ptr<Person> Database::findPersonWithPESEL(const std::string & PESEL)
                 });
     std::string message = "There is no person with PESEL - " + PESEL + " in the database";
     if (iter == end(persons_)) throw std::invalid_argument(message);
-    return *iter;
+    return iter;
 }
 
 std::vector<std::shared_ptr<Person>> Database::findPersonWithSurname(const std::string & surname)

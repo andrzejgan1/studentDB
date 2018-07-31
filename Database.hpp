@@ -14,7 +14,7 @@ public:
     void sortBySurname();
     void sortByPayment();
     void removePersonWithPESEL(const std::string & PESEL);
-    std::shared_ptr<Person> findPersonWithPESEL(const std::string & PESEL);
+    std::vector<std::shared_ptr<Person>>::iterator findPersonWithPESEL(const std::string & PESEL);
     std::vector<std::shared_ptr<Person>> findPersonWithSurname(const std::string & surname);
     void changeAddressPaymentPersonWithPESEL(const std::string & PESEL, const std::string & address, int payment);
     void showDB();
