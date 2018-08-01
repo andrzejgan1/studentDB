@@ -1,144 +1,71 @@
-#define CATCH_CONFIG_MAIN 
 #include "Database.hpp"
+#include "Person.hpp"
 #include "Student.hpp"
 #include <iostream>
-#include "catch.hpp"
 
-
-TEST_CASE("Testing find person")
+int main()
 {
-    SECTION("Finding person by PESEL")
+    Database db;
+    
+    std::cout << "I try find person with PESEL - 123 - in empty database" << std::endl;
+    try
     {
-        GIVEN("A empty database")
+        db.findPersonWithPESEL("123");
+    }
+    catch(const std::exception & exc)
+    {
+        std::cout << exc.what() << std::endl;
+    }
+    std::cin.get();
+    
+    db.fillDB(15, 18);
+    std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclaw, Staszica 12", 99789);
+    db.addPerson(student);
+    std::cout << "Show database" << std::endl;
+    db.showDB();
+    std::cin.get();
+    std::cout << "Find data pesron with PESEL - 12345678901" << std::endl;
+    try
+    {
+        std::shared_ptr<Person> foundPerson = *(db.findPersonWithPESEL("12345678901"));
+        db.printNamesTable();
+        db.printDataPerson(foundPerson);
+    }
+    catch(const std::exception & exc)
+    {
+        std::cout << exc.what() << std::endl;
+    }
+    std::cin.get();
+    
+    try
+    {
+        std::cout << "Find persons with surname - Lis" << std::endl;                
+        std::vector<std::shared_ptr<Person>> personsWithSurnames = db.findPersonWithSurname("Lis");
+        db.printNamesTable();
+        for (auto person : personsWithSurnames)
         {
-            Database db;
-            WHEN("Finding person with PESEL - 123 - in empty database")
-            {
-                REQUIRE_THROWS_WITH(*(db.findPersonWithPESEL("123")),"Database is empty!");
-            }
-            GIVEN("Fill the database random data 15 students and 18 workers")
-            {
-                db.fillDB(15, 18);
-                THEN("Finding person with PESEL - 123 - no in the database")
-                {
-                    REQUIRE_THROWS_WITH(*(db.findPersonWithPESEL("123")),"There is no person with PESEL - 123 in the database");
-                }
-                WHEN("Added person to database")
-                {
-                    std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclaw, Staszica 12", 99789);
-                    db.addPerson(student);
-                    THEN("Finding person with PESEL - 12345678901 - existe in the database")
-                    {
-                        REQUIRE(*(db.findPersonWithPESEL("12345678901")) == student);
-                    }
-                }
-            }
+            db.printDataPerson(person);
         }
     }
-    SECTION("Finding person by surname")
+    catch(const std::exception & exc)
     {
-        GIVEN("A empty database")
-        {
-            Database db;
-            WHEN("Finding person with surname - Kot - in empty database")
-            {
-                REQUIRE_THROWS_WITH(db.findPersonWithSurname("Kot"),"Database is empty!");
-            }
-            GIVEN("Fill the database random data 15 students and 18 workers")
-            {
-                db.fillDB(15, 18);
-                THEN("Finding person with surname - Kot - no in the database")
-                {
-                    REQUIRE_THROWS_WITH(db.findPersonWithSurname("Kot"),"There isn't person with surname Kot");
-                }
-                THEN("Finding persons with surname - Lis  - existe in the database")
-                {
-                    std::vector<std::shared_ptr<Person>> personsWithSurnames = db.findPersonWithSurname("Lis");
-                    for (auto person : personsWithSurnames)
-                    {
-                        REQUIRE(person->getSurname() == "Lis");
-                    }
-                }
-            }
-        }
+        std::cout << exc.what() << std::endl;
     }
-}
+    std::cin.get();
 
-TEST_CASE("Testing sort")
-{
-    SECTION("Sorting persons by PESEL")
-    {
-        GIVEN("A empty database")
-        {
-            Database db;
-            WHEN("Sorting persons by PESEL in empty database")
-            {
-                REQUIRE_THROWS_WITH(db.sortByPESEL(), "Database is empty!");
-            }
-            GIVEN("Fill the database random data 15 students and 18 workers")
-            {
-                db.fillDB(15, 18);
-                THEN("Sort person by PESEL in database")
-                {
-                    db.sortByPESEL();
-                    std::vector<std::shared_ptr<Person>>::iterator iter = db.getFirstIterOfPerson();
-                    for (int i = 0; i < db.getNumberOfPersons()-1; i++)
-                    {
-                        REQUIRE((*iter)->getPESEL() < (*(iter+1))->getPESEL());
-                        iter++;
-                    }
-                }
-            }
-        }
-    }
-    SECTION("Sorting persons by surname")
-    {
-        GIVEN("A empty database")
-        {
-            Database db;
-            WHEN("Sorting persons by surname in empty database")
-            {
-                REQUIRE_THROWS_WITH(db.sortBySurname(), "Database is empty!");
-            }
-            GIVEN("Fill the database random data 15 students and 18 workers")
-            {
-                db.fillDB(15, 18);
-                THEN("Sort person by surname in database")
-                {
-                    db.sortBySurname();
-                    std::vector<std::shared_ptr<Person>>::iterator iter = db.getFirstIterOfPerson();
-                    for (int i = 0; i < db.getNumberOfPersons()-1; i++)
-                    {
-                        REQUIRE((*iter)->getSurname() <= (*(iter+1))->getSurname());
-                        iter++;
-                    }
-                }
-            }
-        }
-    }
-    SECTION("Sorting persons by payment")
-    {
-        GIVEN("A empty database")
-        {
-            Database db;
-            WHEN("Sorting persons by payment in empty database")
-            {
-                REQUIRE_THROWS_WITH(db.sortByPayment(), "Database is empty!");
-            }
-            GIVEN("Fill the database random data 15 students and 18 workers")
-            {
-                db.fillDB(15, 18);
-                THEN("Sort person by payment in database")
-                {
-                    db.sortByPayment();
-                    std::vector<std::shared_ptr<Person>>::iterator iter = db.getFirstIterOfPerson();
-                    for (int i = 0; i < db.getNumberOfPersons()-1; i++)
-                    {
-                        REQUIRE((*iter)->getPayment() <= (*(iter+1))->getPayment());
-                        iter++;
-                    }
-                }
-            }
-        }
-    }
+    std::cout << "Sort person by PESEL in database" << std::endl;
+    db.sortByPESEL();
+    db.showDB();
+    std::cin.get();
+    
+    std::cout << "Sort person by surname in database" << std::endl;
+    db.sortBySurname();
+    db.showDB();
+    std::cin.get();
+
+    std::cout << "Sort person by payment in database" << std::endl;
+    db.sortByPayment();
+    db.showDB();
+    std::cin.get();
+    return 0;
 }
