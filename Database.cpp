@@ -43,15 +43,8 @@ void Database::sortBySurname()
 }
 
 void Database::removePersonWithPESEL(const std::string & PESEL)
-{
-    for (int i = 0; i < persons_.size(); i++)
-    {
-        if (persons_.at(i) -> getPESEL() == PESEL)
-        {
-            persons_.erase(persons_.begin()+i);
-            break;
-        }
-    }
+{ 
+    persons_.erase(findPersonWithPESEL(PESEL));
 }
 
 std::vector<std::shared_ptr<Person>>::iterator Database::findPersonWithPESEL(const std::string & PESEL)
