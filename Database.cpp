@@ -4,6 +4,9 @@
 #include <iomanip>
 #include <random> 
 #include <stdexcept> 
+#include <fstream>
+#include <string>
+#include <sstream>
 #include "Student.hpp"
 #include "Worker.hpp"
 
@@ -40,7 +43,8 @@ void Database::sortBySurname()
 }
 
 void Database::removePersonWithPESEL(const std::string & PESEL)
-{
+{ 
+    persons_.erase(findPersonWithPESEL(PESEL));
 }
 
 std::vector<std::shared_ptr<Person>>::iterator Database::findPersonWithPESEL(const std::string & PESEL)
@@ -93,10 +97,71 @@ void Database::showDB()
 
 void Database::saveToFile()
 {
+    std::fstream file;
+    file.open ("data_base.txt", std::ios::out);
+    if (!file.is_open())
+        throw std::runtime_error("unable to open file");
+    else
+    {
+        for (int i = 0; i < persons_.size(); ++i)
+        {
+            file << persons_[i] -> getName() << ","
+                 << persons_[i] -> getSurname() << ","
+                 << persons_[i] -> getPESEL() << ","
+                 << persons_[i] -> getSex() << ","
+                 << persons_[i] -> getAddress() << ","
+                 << persons_[i] -> getIndex() << ","
+                 << persons_[i] -> getPayment() << ","
+                 << std::endl;
+        }
+        file.close();
+    }
 }
 
 void Database::readFromFile()
 {
+    std::fstream file;
+    file.open ("data_base.txt", std::ios::in);
+    if(!file.good())
+        throw std::runtime_error("unable to open file");
+    else
+    {
+        std::string line;
+        std::string individualString;
+        char separator = ',';
+        std::vector<std::string>strVector;
+        while(std::getline(file, line))
+        {
+            std::stringstream stringStream_(line);
+            while(std::getline(stringStream_, individualString, separator))
+            {
+                strVector.push_back(individualString);
+            }
+            std::string name = strVector[0];
+            std::string surname = strVector[1];
+            std::string PESEL = strVector[2];
+            std::string strSex= strVector[3];
+            std::vector<char> cSex(strSex.c_str(), strSex.c_str() + strSex.size() + 1);
+            char sex = cSex[0];
+            std::string address = strVector[4];
+            std::string strIndex = strVector[5];
+            int index = std::stoi(strIndex);
+            std::string strPayment = strVector[6];
+            int payment = std::stoi(strPayment);
+            if ( payment > 0)
+            {
+                std::shared_ptr<Person> workerPtr = std::make_shared<Worker> (name, surname, PESEL, sex, address, payment);
+                addPerson(workerPtr);
+            }
+            else
+            {
+                std::shared_ptr<Person> studentPtr = std::make_shared<Student> (name, surname, PESEL, sex, address, index);
+                addPerson(studentPtr);
+            }
+            strVector.clear();
+        }
+        file.close();
+    }
 }
     
 void Database::fillDB(int numberOfStudnets, int numberOfWorkers)
