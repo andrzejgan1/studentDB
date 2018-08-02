@@ -12,7 +12,20 @@
 
 void Database::addPerson(std::shared_ptr<Person> person)
 {
-    persons_.push_back(person);
+    try
+    {
+        findPersonWithPESEL(person->getPESEL());
+        std::string message = "I can't add person with PESEL - " + person->getPESEL() + ". This person exists in database";
+        throw std::out_of_range(message);
+    }
+    catch (const std::invalid_argument & exc)
+    {
+        persons_.push_back(person);
+    }
+    catch (const std::out_of_range & exc)
+    {
+        std::cout << exc.what() << std::endl;
+    }
 }
 
 void Database::sortByPayment()
@@ -115,6 +128,7 @@ void Database::saveToFile()
                  << std::endl;
         }
         file.close();
+        persons_.clear();
     }
 }
 

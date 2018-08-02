@@ -4,10 +4,10 @@
 
 Compile and run the project:
     
-    `make`
-    `./db.out`
+    ```make
+    ./db.out```
 
 For test:
 
-    `make test`
-    `./test.out`
+    ```make test
+    ./test.out```

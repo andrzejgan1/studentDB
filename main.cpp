@@ -55,17 +55,17 @@ int main()
 
     try
     {
-        std::cout << "Sort person by PESEL in database" << std::endl;
+        std::cout << "Sort person by PESEL" << std::endl;
         db.sortByPESEL();
         db.showDB();
         std::cin.get();
 
-        std::cout << "Sort person by surname in database" << std::endl;
+        std::cout << "Sort person by surname" << std::endl;
         db.sortBySurname();
         db.showDB();
         std::cin.get();
 
-        std::cout << "Sort person by payment in database" << std::endl;
+        std::cout << "Sort person by payment" << std::endl;
         db.sortByPayment();
         db.showDB();
         std::cin.get();
@@ -77,8 +77,9 @@ int main()
 
     try
     {
-        std::cout << "Save and read database to file" << std::endl;
+        std::cout << "Save to file and 2 x read database" << std::endl;
         db.saveToFile();
+        db.readFromFile();
         db.readFromFile();
         db.showDB();
     }
