@@ -118,7 +118,7 @@ void Database::saveToFile()
         throw std::runtime_error("unable to open file");
     else
     {
-        for (int i = 0; i < persons_.size(); ++i)
+        for (size_t i = 0; i < persons_.size(); ++i)
         {
             file << persons_[i] -> getName() << "|"
                  << persons_[i] -> getSurname() << "|"
@@ -182,7 +182,6 @@ void Database::readFromFile()
     
 void Database::fillDB(int numberOfStudnets, int numberOfWorkers)
 {
-    int index = 0, payment = 0;
     std::string name, surname, address, PESEL;
     char sex;
     while (numberOfStudnets--)
