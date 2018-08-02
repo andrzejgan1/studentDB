@@ -26,7 +26,7 @@ int main()
         std::cout << "Show database" << std::endl;
         db.showDB();
         std::cin.get();
-        std::cout << "Find data pesron with PESEL - 12345678903" << std::endl;
+        std::cout << "Find data person with PESEL - 12345678903" << std::endl;
         std::shared_ptr<Person> foundPerson = *(db.findPersonWithPESEL("12345678903"));
         db.printNamesTable();
         db.printDataPerson(foundPerson);
@@ -55,8 +55,8 @@ int main()
 
     try
     {
-        std::cout << "Sort person by PESEL" << std::endl;
-        db.sortByPESEL();
+        std::cout << "Sort person by payment" << std::endl;
+        db.sortByPayment();
         db.showDB();
         std::cin.get();
 
@@ -65,8 +65,8 @@ int main()
         db.showDB();
         std::cin.get();
 
-        std::cout << "Sort person by payment" << std::endl;
-        db.sortByPayment();
+        std::cout << "Sort person by PESEL" << std::endl;
+        db.sortByPESEL();
         db.showDB();
         std::cin.get();
     }
@@ -87,5 +87,18 @@ int main()
     {
         std::cout << exc.what() << std::endl;
     }
+    std::cin.get();
+
+    try
+    {
+        std::cout << "Erase person with PESEL - 12345678903" << std::endl;
+        db.removePersonWithPESEL("12345678903");
+        db.showDB();
+    }
+    catch(const std::exception & exc)
+    {
+        std::cout << exc.what() << std::endl;
+    }
+
     return 0;
 }

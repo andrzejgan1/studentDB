@@ -1,5 +1,6 @@
 #include "Person.hpp"
 #include <stdexcept>
+#include <limits>
 
 Person::Person(const std::string & name, const std::string & surname, const std::string & PESEL, char sex, const std::string & address) :
     name_(name),
@@ -62,6 +63,6 @@ char Person::getSex() const
 
 int Person::getIndex() const
 {
-    return 0;
+    return std::numeric_limits<int>::max();
 }
 Person::~Person() {}
