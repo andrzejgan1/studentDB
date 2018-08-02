@@ -62,6 +62,7 @@ void Database::removePersonWithPESEL(const std::string & PESEL)
 
 std::vector<std::shared_ptr<Person>>::iterator Database::findPersonWithPESEL(const std::string & PESEL)
 {
+    if (!Person::checkPESEL(PESEL)) throw std::invalid_argument("Bad PESEL");
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
     auto iter = std::find_if(begin(persons_), end(persons_),
                     [PESEL](const auto & person_){
