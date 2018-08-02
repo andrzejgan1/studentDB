@@ -105,13 +105,13 @@ void Database::saveToFile()
     {
         for (int i = 0; i < persons_.size(); ++i)
         {
-            file << persons_[i] -> getName() << ","
-                 << persons_[i] -> getSurname() << ","
-                 << persons_[i] -> getPESEL() << ","
-                 << persons_[i] -> getSex() << ","
-                 << persons_[i] -> getAddress() << ","
-                 << persons_[i] -> getIndex() << ","
-                 << persons_[i] -> getPayment() << ","
+            file << persons_[i] -> getName() << "|"
+                 << persons_[i] -> getSurname() << "|"
+                 << persons_[i] -> getPESEL() << "|"
+                 << persons_[i] -> getSex() << "|"
+                 << persons_[i] -> getAddress() << "|"
+                 << persons_[i] -> getIndex() << "|"
+                 << persons_[i] -> getPayment() << "|"
                  << std::endl;
         }
         file.close();
@@ -128,7 +128,7 @@ void Database::readFromFile()
     {
         std::string line;
         std::string individualString;
-        char separator = ',';
+        char separator = '|';
         std::vector<std::string>strVector;
         while(std::getline(file, line))
         {
