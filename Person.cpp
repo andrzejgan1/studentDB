@@ -1,12 +1,15 @@
 #include "Person.hpp"
+#include <stdexcept>
 
 Person::Person(const std::string & name, const std::string & surname, const std::string & PESEL, char sex, const std::string & address) :
     name_(name),
     surname_(surname),
-    PESEL_(PESEL),
     sex_(sex),
     address_(address)
-{}
+{
+    if (!Person::checkPESEL(PESEL)) throw std::invalid_argument("Bad PESEL");
+    PESEL_ = PESEL;
+}
 
 std::string Person::getSurname() const
 {
@@ -28,37 +31,22 @@ void Person::setAddress(const std::string & address)
     address_ = address;
 }
 
-bool Person::PESELValidator(const std::string& PESEL, int sum)
-{
-    if(PESEL.size() != 11) return false;
-    if(sum <= 0) return false;
-    return true;
-
-}
-    
 bool Person::checkPESEL(const std::string & PESEL) 
 {
-        int numbers[11];
+    if (PESEL.size() != 11) return false;
     int sum = 0;
-
-    for(int i=0; i<11; i++)
-    {
-        numbers[i] = PESEL[i] - 48;
-    }
-
-    sum += numbers[0] * 9;
-    sum += numbers[1] * 7;
-    sum += numbers[2] * 3;
-    sum += numbers[3] * 1;
-    sum += numbers[4] * 9;
-    sum += numbers[5] * 7;
-    sum += numbers[6] * 3;
-    sum += numbers[7] * 1;
-    sum += numbers[8] * 9;
-    sum += numbers[9] * 7;
-    sum = sum%10;
-
-    if(sum == numbers[10] && PESELValidator(PESEL, sum)) return true;
+    sum = (PESEL[0] - 48) * 9 +
+          (PESEL[1] - 48) * 7 +
+          (PESEL[2] - 48) * 3 +
+          (PESEL[3] - 48) * 1 +
+          (PESEL[4] - 48) * 9 +
+          (PESEL[5] - 48) * 7 +
+          (PESEL[6] - 48) * 3 +
+          (PESEL[7] - 48) * 1 +
+          (PESEL[8] - 48) * 9 +
+          (PESEL[9] - 48) * 7;
+    if (sum == 0) return false;
+    if ((sum%10) == (PESEL[10] - 48)) return true;
     return false;
 }
 

@@ -21,13 +21,13 @@ int main()
     try
     {
         db.fillDB(15, 18);
-        std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678901", 'W', "Wroclaw, Staszica 12", 99789);
+        std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678903", 'W', "Wroclaw, Staszica 12", 99789);
         db.addPerson(student);
         std::cout << "Show database" << std::endl;
         db.showDB();
         std::cin.get();
-        std::cout << "Find data pesron with PESEL - 12345678901" << std::endl;
-        std::shared_ptr<Person> foundPerson = *(db.findPersonWithPESEL("12345678901"));
+        std::cout << "Find data pesron with PESEL - 12345678903" << std::endl;
+        std::shared_ptr<Person> foundPerson = *(db.findPersonWithPESEL("12345678903"));
         db.printNamesTable();
         db.printDataPerson(foundPerson);
     }

@@ -17,8 +17,7 @@ public:
     std::string getSurname() const;
     void setAddress(const std::string & address);
     virtual void setPayment(int payment) = 0;
-    bool checkPESEL(const std::string & PESEL);
-    bool PESELValidator(const std::string& PESEL, int sum);
+    static bool checkPESEL(const std::string & PESEL);
     std::string getAddress() const;
     char getSex() const;
     virtual int getIndex() const;
