@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
-#include <random> 
+#include <random>
 #include <stdexcept> 
 #include <fstream>
 #include <string>

@@ -1,6 +1,6 @@
 #include "Database.hpp"
 #include "Person.hpp"
-#include "Student.hpp"
+#include "Worker.hpp"
 #include <iostream>
 
 int main()
@@ -21,8 +21,8 @@ int main()
     try
     {
         db.fillDB(15, 18);
-        std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678903", 'W', "Wroclaw, Staszica 12", 99789);
-        db.addPerson(student);
+        std::shared_ptr<Person> worker = std::make_shared<Worker>("Katarzyna", "Nowak", "12345678903", 'W', "Wroclaw, Staszica 12", 99789);
+        db.addPerson(worker);
         std::cout << "Show database" << std::endl;
         db.showDB();
         std::cin.get();
@@ -81,6 +81,18 @@ int main()
         db.saveToFile();
         db.readFromFile();
         db.readFromFile();
+        db.showDB();
+    }
+    catch(const std::exception & exc)
+    {
+        std::cout << exc.what() << std::endl;
+    }
+    std::cin.get();
+
+    try
+    {
+        std::cout << "Change address and pwaymnet person with PESEL - 12345678903" << std::endl;
+        db.changeAddressPaymentPersonWithPESEL("12345678903","Berlin",9000);
         db.showDB();
     }
     catch(const std::exception & exc)

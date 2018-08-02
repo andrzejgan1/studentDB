@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN 
 #include "Database.hpp"
 #include "Student.hpp"
+#include "Worker.hpp"
 #include <iostream>
 #include "catch.hpp"
 
@@ -246,6 +247,48 @@ TEST_CASE("Testing save and read file")
                 THEN("Read from file")
                 {
                     REQUIRE_NOTHROW(db.readFromFile());
+                }
+            }
+        }
+    }
+}
+
+
+
+TEST_CASE("Change address and payment by PESEL")
+{
+    SECTION("Change address and payment worker")
+    {
+        GIVEN("A no empty database")
+        {
+            Database db;
+            db.fillDB(15, 18);
+            WHEN("Added worker to database")
+            {
+                std::shared_ptr<Person> worker = std::make_shared<Worker>("Katarzyna", "Nowak", "12345678903", 'W', "Wroclaw, Staszica 12", 3000);
+                db.addPerson(worker);
+                THEN("Change address and payment person with PESEL - 12345678903")
+                {
+                    db.changeAddressPaymentPersonWithPESEL("12345678903", "Londyn", 8000);
+                    REQUIRE((*db.findPersonWithPESEL("12345678903"))->getAddress() == "Londyn");
+                    REQUIRE((*db.findPersonWithPESEL("12345678903"))->getPayment() == 8000);
+                }
+            }
+        }
+    }
+    SECTION("Change address and payment student")
+    {
+        GIVEN("A no empty database")
+        {
+            Database db;
+            db.fillDB(15, 18);
+            WHEN("Added student to database")
+            {
+                std::shared_ptr<Person> student = std::make_shared<Student>("Katarzyna", "Nowak", "12345678903", 'W', "Wroclaw, Staszica 12", 3000);
+                db.addPerson(student);
+                THEN("Change address and payment person with PESEL - 12345678903")
+                {
+                    REQUIRE_THROWS(db.changeAddressPaymentPersonWithPESEL("12345678903", "Londyn", 8000));
                 }
             }
         }
