@@ -111,6 +111,7 @@ void Database::showDB()
 
 void Database::saveToFile()
 {
+    if (persons_.empty()) throw std::invalid_argument("Database is empty");
     std::fstream file;
     file.open ("data_base.txt", std::ios::out);
     if (!file.is_open())

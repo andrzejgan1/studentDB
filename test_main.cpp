@@ -223,3 +223,31 @@ TEST_CASE("Testing erase person with PESEL")
         }
     }
 }
+
+TEST_CASE("Testing save and read file")
+{
+    SECTION("Save amd read file")
+    {
+        GIVEN("A empty database")
+        {
+            Database db;
+            WHEN("Save empty database")
+            {
+                REQUIRE_THROWS_WITH(db.saveToFile(),"Database is empty");
+            }
+            GIVEN("Fill the database random data 15 students and 18 workers")
+            {
+                db.fillDB(15, 18);
+                THEN("Save database to file")
+                {
+                    db.saveToFile();
+                    REQUIRE_THROWS_WITH(db.showDB(),"Database is empty");
+                }
+                THEN("Read from file")
+                {
+                    REQUIRE_NOTHROW(db.readFromFile());
+                }
+            }
+        }
+    }
+}
