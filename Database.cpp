@@ -83,6 +83,9 @@ std::vector<std::shared_ptr<Person>> Database::findPersonWithSurname(const std::
     
 void Database::changeAddressPaymentPersonWithPESEL(const std::string & PESEL, const std::string & address, int payment)
 {
+    auto person = *findPersonWithPESEL(PESEL);
+    person -> setAddress(address);
+    person -> setPayment(payment);
 }
     
 void Database::showDB()
