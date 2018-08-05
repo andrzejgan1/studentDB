@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <functional>
 #include "Student.hpp"
 #include "Worker.hpp"
 
@@ -28,31 +29,32 @@ void Database::addPerson(std::shared_ptr<Person> person)
     }
 }
 
+void Database::sort(std::function<bool(std::shared_ptr<Person> &,std::shared_ptr<Person> &)> what)
+{
+        std::sort(persons_.begin(), persons_.end(), what);
+}
+
 void Database::sortByPayment()
 {
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
-    std::sort(persons_.begin(), persons_.end(),
-                    [](const auto & person1, const auto & person2){
-                    return person1->getPayment() < person2->getPayment();
-                });
+    sort([](const auto & person1, const auto & person2){return person1->getPayment() < person2->getPayment();});
 }
 
 void Database::sortByPESEL()
 {
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
-    std::sort(persons_.begin(), persons_.end(),
-                    [](const auto & person1, const auto & person2){
-                    return person1->getPESEL() < person2->getPESEL();
-                });
+    sort([](const auto & person1, const auto & person2){return person1->getPESEL() < person2->getPESEL();});
 } 
 
 void Database::sortBySurname()
 {
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
-    std::sort(persons_.begin(), persons_.end(),
-                    [](const auto & person1, const auto & person2){
-                    return person1->getSurname() < person2->getSurname();
-                });
+    sort([](const auto & person1, const auto & person2){return person1->getSurname() < person2->getSurname();});
+}
+
+auto Database::find(std::function<bool(std::shared_ptr<Person> &)> what, std::vector<std::shared_ptr<Person>>::iterator iter)
+{
+    return std::find_if(iter, end(persons_), what);
 }
 
 void Database::removePersonWithPESEL(const std::string & PESEL)
@@ -64,10 +66,7 @@ std::vector<std::shared_ptr<Person>>::iterator Database::findPersonWithPESEL(con
 {
     if (!Person::checkPESEL(PESEL)) throw std::invalid_argument("Bad PESEL");
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
-    auto iter = std::find_if(begin(persons_), end(persons_),
-                    [PESEL](const auto & person_){
-                    return person_->getPESEL() == PESEL;
-                });
+    auto iter = find([PESEL](const auto & person_){return person_->getPESEL() == PESEL;}, begin(persons_));
     std::string message = "There is no person with PESEL - " + PESEL + " in the database";
     if (iter == end(persons_)) throw std::invalid_argument(message);
     return iter;
@@ -80,10 +79,7 @@ std::vector<std::shared_ptr<Person>> Database::findPersonWithSurname(const std::
     auto iter = begin(persons_);
     while (iter != end(persons_))
     {
-        iter = std::find_if(iter, end(persons_),
-                  [surname](const auto & person_){
-                      return person_->getSurname() == surname;
-                  });
+        iter = find([surname](const auto & person_){return person_->getSurname() == surname;}, iter);
         if (iter != end(persons_))
         {
             personsWithSurname.push_back(*iter);
