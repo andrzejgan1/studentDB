@@ -1,5 +1,5 @@
 CXX = g++
-STD = -std=c++14
+STD = -std=c++1y
 CXXFLAGS = -Wall -Wpedantic -Wextra
 SRCS = $(shell find . ! -name "test_main.cpp" -name "*.cpp")
 SRCSTEST = $(shell find . ! -name "main.cpp" -name "*.cpp")
