@@ -1,4 +1,4 @@
-CXX = clang++
+CXX = g++
 STD = -std=c++14
 CXXFLAGS = -Wall -Wpedantic -Wextra
 SRCS = $(shell find . ! -name "test_main.cpp" -name "*.cpp")
