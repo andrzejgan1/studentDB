@@ -18,9 +18,8 @@ Person::Person(const std::string & packedData) :
     name_(packedData.substr(20,20)),
     surname_(packedData.substr(40,20)),
     sex_(packedData[60]),
-    address_(packedData.substr(100,40))
+    address_(packedData.substr(80,40))
 {
-    std::cout << packedData.substr(0,11) << std::endl;
     if (!Person::checkPESEL(packedData.substr(0,11))) throw std::invalid_argument("Bad PESEL");
     PESEL_ = packedData.substr(0,11);
 }
