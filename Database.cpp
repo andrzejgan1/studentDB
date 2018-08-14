@@ -117,16 +117,9 @@ void Database::saveToFile()
         throw std::runtime_error("unable to open file");
     else
     {
-        for (size_t i = 0; i < persons_.size(); ++i)
+        for (auto person : persons_)
         {
-            file << persons_[i] -> getName() << "|"
-                 << persons_[i] -> getSurname() << "|"
-                 << persons_[i] -> getPESEL() << "|"
-                 << persons_[i] -> getSex() << "|"
-                 << persons_[i] -> getAddress() << "|"
-                 << persons_[i] -> getIndex() << "|"
-                 << persons_[i] -> getPayment() << "|"
-                 << std::endl;
+            file << person->toString();
         }
         file.close();
         persons_.clear();
@@ -262,14 +255,15 @@ void Database::printNamesTable() const
 
 void Database::printDataPerson(ptr person) const
 {
-     std::cout << std::left << std::setw(20)
+     std::cout << person->toString();
+         /*<< std::left << std::setw(20)
                << person->getPESEL() << std::setw(20)
                << person->getName() << std::setw(20)
                << person->getSurname() << std::setw(20)
                << person->getSex() << std::setw(40)
                << person->getAddress() << std::setw(20)
                << person->getIndex() << std::setw(20)
-               << person->getPayment() << std::endl;
+               << person->getPayment() << std::endl;*/
 }
 
 int Database::getNumberOfPersons() const
