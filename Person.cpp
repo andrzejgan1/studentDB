@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <limits>
 #include <iomanip>
+#include <iostream>
 
 Person::Person(const std::string & name, const std::string & surname, const std::string & PESEL, char sex, const std::string & address) :
     name_(name),
@@ -19,8 +20,9 @@ Person::Person(const std::string & packedData) :
     sex_(packedData[60]),
     address_(packedData.substr(100,40))
 {
-    if (!Person::checkPESEL(packedData.substr(0,20))) throw std::invalid_argument("Bad PESEL");
-    PESEL_ = packedData.substr(0,20);
+    std::cout << packedData.substr(0,11) << std::endl;
+    if (!Person::checkPESEL(packedData.substr(0,11))) throw std::invalid_argument("Bad PESEL");
+    PESEL_ = packedData.substr(0,11);
 }
 
 std::string Person::getSurname() const
