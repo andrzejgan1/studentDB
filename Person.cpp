@@ -1,6 +1,7 @@
 #include "Person.hpp"
 #include <stdexcept>
 #include <limits>
+#include <iomanip>
 
 Person::Person(const std::string & name, const std::string & surname, const std::string & PESEL, char sex, const std::string & address) :
     name_(name),
@@ -65,4 +66,19 @@ int Person::getIndex() const
 {
     return std::numeric_limits<int>::max();
 }
+
 Person::~Person() {}
+
+std::string Person::toString() const
+{
+    std::stringstream ss;
+    ss << std::left << std::setw(20)
+       << PESEL_ << std::setw(20)
+       << name_ << std::setw(20)
+       << surname_ << std::setw(20)
+       << sex_ << std::setw(40)
+       << address_ << std::setw(20)
+       << getIndex() << std::setw(20)
+       << getPayment() << std::endl;
+    return ss.str();
+}
