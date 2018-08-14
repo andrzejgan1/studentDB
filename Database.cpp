@@ -11,7 +11,7 @@
 #include "Student.hpp"
 #include "Worker.hpp"
 
-void Database::addPerson(std::shared_ptr<Person> person)
+void Database::addPerson(ptr person)
 {
     try
     {
@@ -29,7 +29,7 @@ void Database::addPerson(std::shared_ptr<Person> person)
     }
 }
 
-void Database::sort(std::function<bool(std::shared_ptr<Person> &,std::shared_ptr<Person> &)> what)
+void Database::sort(std::function<bool(ptr &,ptr &)> what)
 {
         std::sort(persons_.begin(), persons_.end(), what);
 }
@@ -52,17 +52,17 @@ void Database::sortBySurname()
     sort([](const auto & person1, const auto & person2){return person1->getSurname() < person2->getSurname();});
 }
 
-auto Database::find(std::function<bool(std::shared_ptr<Person> &)> what, std::vector<std::shared_ptr<Person>>::iterator iter)
+auto Database::find(std::function<bool(ptr &)> what, iterator iter)
 {
     return std::find_if(iter, end(persons_), what);
 }
 
-void Database::removePersonWithPESEL(const std::string & PESEL)
+void Database::removePersonWithPESEL(c_str PESEL)
 { 
     persons_.erase(findPersonWithPESEL(PESEL));
 }
 
-std::vector<std::shared_ptr<Person>>::iterator Database::findPersonWithPESEL(const std::string & PESEL)
+iterator Database::findPersonWithPESEL(c_str PESEL)
 {
     if (!Person::checkPESEL(PESEL)) throw std::invalid_argument("Bad PESEL");
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
@@ -72,10 +72,10 @@ std::vector<std::shared_ptr<Person>>::iterator Database::findPersonWithPESEL(con
     return iter;
 }
 
-std::vector<std::shared_ptr<Person>> Database::findPersonWithSurname(const std::string & surname)
+vec Database::findPersonWithSurname(c_str surname)
 {
     if (persons_.empty()) throw std::invalid_argument("Database is empty!");
-    std::vector<std::shared_ptr<Person>> personsWithSurname;
+    vec personsWithSurname;
     auto iter = begin(persons_);
     while (iter != end(persons_))
     {
@@ -91,7 +91,7 @@ std::vector<std::shared_ptr<Person>> Database::findPersonWithSurname(const std::
     return personsWithSurname;
 }
     
-void Database::changeAddressPaymentPersonWithPESEL(const std::string & PESEL, const std::string & address, int payment)
+void Database::changeAddressPaymentPersonWithPESEL(c_str PESEL, c_str address, int payment)
 {
     auto person = *findPersonWithPESEL(PESEL);
     person -> setAddress(address);
@@ -165,12 +165,12 @@ void Database::readFromFile()
             int payment = std::stoi(strPayment);
             if ( payment > 0)
             {
-                std::shared_ptr<Person> workerPtr = std::make_shared<Worker> (name, surname, PESEL, sex, address, payment);
+                ptr workerPtr = std::make_shared<Worker> (name, surname, PESEL, sex, address, payment);
                 addPerson(workerPtr);
             }
             else
             {
-                std::shared_ptr<Person> studentPtr = std::make_shared<Student> (name, surname, PESEL, sex, address, index);
+                ptr studentPtr = std::make_shared<Student> (name, surname, PESEL, sex, address, index);
                 addPerson(studentPtr);
             }
             strVector.clear();
@@ -187,14 +187,14 @@ void Database::fillDB(int numberOfStudnets, int numberOfWorkers)
     {
         getData(name, surname, address, sex, PESEL); 
         int index = getRandom(10000, 100000);
-        std::shared_ptr<Person> student = std::make_shared<Student>(name, surname, PESEL, sex, address, index);
+        ptr student = std::make_shared<Student>(name, surname, PESEL, sex, address, index);
         addPerson(student);
     }
     while (numberOfWorkers--)
     {
         getData(name, surname, address, sex, PESEL); 
         int payment = getRandom(3000, 15000);
-        std::shared_ptr<Person> worker = std::make_shared<Worker>(name, surname, PESEL, sex, address, payment);
+        ptr worker = std::make_shared<Worker>(name, surname, PESEL, sex, address, payment);
         addPerson(worker);
     }
 }
@@ -260,7 +260,7 @@ void Database::printNamesTable() const
     std::cout.fill(' ');
 }
 
-void Database::printDataPerson(std::shared_ptr<Person> person) const
+void Database::printDataPerson(ptr person) const
 {
      std::cout << std::left << std::setw(20)
                << person->getPESEL() << std::setw(20)
@@ -277,7 +277,7 @@ int Database::getNumberOfPersons() const
     return persons_.size();
 }
 
-std::vector<std::shared_ptr<Person>>::iterator Database::getFirstIterOfPerson()
+iterator Database::getFirstIterOfPerson()
 {
     return begin(persons_);
 }

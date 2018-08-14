@@ -3,28 +3,33 @@
 #include <vector>
 #include <memory>
 
+using ptr = std::shared_ptr<Person>;
+using vec = std::vector<std::shared_ptr<Person>>;
+using iterator = std::vector<std::shared_ptr<Person>>::iterator;
+using c_str = const std::string &;
+
 class Database
 {
-    std::vector<std::shared_ptr<Person>> persons_;
+    vec persons_;
     int getRandom(int min, int max) const;
     void getData(std::string & name, std::string & surname, std::string & address, char & sex, std::string & PESEL) const;
 public:
-    void addPerson(std::shared_ptr<Person> person);
+    void addPerson(ptr person);
     void sortByPESEL();
     void sortBySurname();
     void sortByPayment();
-    void removePersonWithPESEL(const std::string & PESEL);
-    std::vector<std::shared_ptr<Person>>::iterator findPersonWithPESEL(const std::string & PESEL);
-    std::vector<std::shared_ptr<Person>> findPersonWithSurname(const std::string & surname);
-    void changeAddressPaymentPersonWithPESEL(const std::string & PESEL, const std::string & address, int payment);
+    void removePersonWithPESEL(c_str PESEL);
+    iterator findPersonWithPESEL(c_str PESEL);
+    vec findPersonWithSurname(c_str surname);
+    void changeAddressPaymentPersonWithPESEL(c_str PESEL, c_str address, int payment);
     void showDB();
     void saveToFile();
     void readFromFile();
     void fillDB(int numberOfStudnets, int numberOfWorkers);
     void printNamesTable() const;
-    void printDataPerson(std::shared_ptr<Person> it) const;
+    void printDataPerson(ptr it) const;
     int getNumberOfPersons() const;
-    std::vector<std::shared_ptr<Person>>::iterator getFirstIterOfPerson();
-    void sort(std::function<bool(std::shared_ptr<Person> &,std::shared_ptr<Person> &)> what);
-    auto find(std::function<bool(std::shared_ptr<Person> &)> what,std::vector<std::shared_ptr<Person>>::iterator iter);
+    iterator getFirstIterOfPerson();
+    void sort(std::function<bool(ptr &, ptr &)> what);
+    auto find(std::function<bool(ptr &)> what, iterator iter);
 };
