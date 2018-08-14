@@ -6,6 +6,11 @@ Student::Student(const std::string & name, const std::string & surname, const st
     index_(index)
 {}
 
+Student::Student(const std::string & packedData) :
+    Person(packedData),
+    index_(std::stoi(packedData.substr(120,20)))
+{}
+
 int Student::getIndex() const
 {
     return index_;

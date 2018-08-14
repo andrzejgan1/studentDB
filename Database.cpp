@@ -135,41 +135,20 @@ void Database::readFromFile()
     else
     {
         std::string line;
-        std::string individualString;
-        char separator = '|';
-        std::vector<std::string>strVector;
         while(std::getline(file, line))
         {
-            std::stringstream stringStream_(line);
-            while(std::getline(stringStream_, individualString, separator))
+            if (std::stoi(line.substr(140,10)))
             {
-                strVector.push_back(individualString);
-            }
-            std::string name = strVector[0];
-            std::string surname = strVector[1];
-            std::string PESEL = strVector[2];
-            std::string strSex= strVector[3];
-            std::vector<char> cSex(strSex.c_str(), strSex.c_str() + strSex.size() + 1);
-            char sex = cSex[0];
-            std::string address = strVector[4];
-            std::string strIndex = strVector[5];
-            int index = std::stoi(strIndex);
-            std::string strPayment = strVector[6];
-            int payment = std::stoi(strPayment);
-            if ( payment > 0)
+                ptr worker = std::make_shared<Worker>(line);
+                addPerson(worker);
+            } else
             {
-                ptr workerPtr = std::make_shared<Worker> (name, surname, PESEL, sex, address, payment);
-                addPerson(workerPtr);
+                ptr student = std::make_shared<Student>(line);
+                addPerson(student);
             }
-            else
-            {
-                ptr studentPtr = std::make_shared<Student> (name, surname, PESEL, sex, address, index);
-                addPerson(studentPtr);
-            }
-            strVector.clear();
         }
-        file.close();
     }
+    file.close();
 }
     
 void Database::fillDB(int numberOfStudnets, int numberOfWorkers)
@@ -256,14 +235,6 @@ void Database::printNamesTable() const
 void Database::printDataPerson(ptr person) const
 {
      std::cout << person->toString();
-         /*<< std::left << std::setw(20)
-               << person->getPESEL() << std::setw(20)
-               << person->getName() << std::setw(20)
-               << person->getSurname() << std::setw(20)
-               << person->getSex() << std::setw(40)
-               << person->getAddress() << std::setw(20)
-               << person->getIndex() << std::setw(20)
-               << person->getPayment() << std::endl;*/
 }
 
 int Database::getNumberOfPersons() const

@@ -13,6 +13,16 @@ Person::Person(const std::string & name, const std::string & surname, const std:
     PESEL_ = PESEL;
 }
 
+Person::Person(const std::string & packedData) :
+    name_(packedData.substr(20,20)),
+    surname_(packedData.substr(40,20)),
+    sex_(packedData[60]),
+    address_(packedData.substr(100,40))
+{
+    if (!Person::checkPESEL(packedData.substr(0,20))) throw std::invalid_argument("Bad PESEL");
+    PESEL_ = packedData.substr(0,20);
+}
+
 std::string Person::getSurname() const
 {
     return surname_;
